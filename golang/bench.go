@@ -14,8 +14,8 @@ import (
 )
 
 const (
-	host         = "127.0.0.1"
-	port         = "4000"
+	host         = "10.2.8.2"
+	port         = "4501"
 	user         = "root"
 	password     = ""
 	database     = "test"
@@ -45,8 +45,6 @@ func executeQueries(db *sql.DB, wg *sync.WaitGroup) {
 	defer wg.Done()
 
 	for {
-		// time.Sleep(queryPeriod)
-		// db.Query(fmt.Sprintf("SELECT SLEEP(%d)", queryPeriod))
 		queryFunc := queries[rand.Intn(len(queries))]
 		queryFunc(db, wg)
 	}
@@ -55,7 +53,7 @@ func executeQueries(db *sql.DB, wg *sync.WaitGroup) {
 func idle(db *sql.DB, wg *sync.WaitGroup) {
 	defer wg.Done()
 	for {
-		time.Sleep(5 * time.Second)
+		time.Sleep(1 * time.Second)
 		x := rand.Intn(4839280)
 		db.Exec(fmt.Sprintf("select %d", x))
 	}
